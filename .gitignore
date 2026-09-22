@@ -1,0 +1,51 @@
+# Unreal Engine
+*.uasset
+*.umap
+*.uproject
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.opensdf
+*.sdf
+*.sln
+*.suo
+
+# Unity
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+*.csproj
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.opendb
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Large binary assets (commit notes/markdown only)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.fbx
+*.obj
+*.blend
