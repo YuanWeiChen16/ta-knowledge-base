@@ -8,7 +8,7 @@
 
 傳統 Phong/Blinn-Phong 光照：美術調參數讓東西「看起來好」，但不同光照環境下表現不一致。
 
-PBR（Physically Based Rendering）：基於物理原則，**在任何光照環境下都有一致且正確的行為**。
+PBR（Physically Based Rendering）：使用近似物理的材質與光照模型，讓材質在校準一致的不同光照環境下表現較可預期；結果仍受資產、光照、曝光與渲染器影響。
 
 ---
 
@@ -38,15 +38,15 @@ PBR（Physically Based Rendering）：基於物理原則，**在任何光照環�
 ### Metallic（金屬度）0-1
 - **0 = 非金屬（Dielectric）**：Albedo 有顏色，高光幾乎是白色
 - **1 = 金屬（Conductor）**：Albedo 變成高光顏色，幾乎無漫反射
-- **中間值**：用於過渡區（生鏽、塗層脫落）
+- **中間值**：通常用於材質混合、抗鋸齒或部分覆蓋；生鏽、掉漆等分層效果優先考慮材質層或遮罩
 
 ### Roughness（粗糙度）0-1
 - **0 = 完全光滑**：鏡面反射
-- **1 = 完全粗糙**：完全漫反射
-- **感知線性**：通常美術感覺 0.5 在視覺上真的是「中等粗糙」
+- **1 = 高粗糙度**：高光寬而模糊，仍可能有鏡面反射
+- **感知調整**：Roughness 數值不是視覺上等距的粗糙度變化；材質參數需搭配目標 shader 檢視
 
 ### Albedo（基礎色）
-- 非金屬：反射率 50-240 sRGB（避免純黑或純白）
+- 非金屬：依材質參考或量測設定合理反射率；沒有適用所有材質的固定 sRGB 範圍
 - 金屬：高光顏色（鐵 = 灰，銅 = 橘，金 = 黃）
 
 ---
@@ -80,9 +80,9 @@ float3 F_Schlick(float3 F0, float VdotH) {
 | 錯誤 | 症狀 | 原因 |
 |------|------|------|
 | Albedo 太黑或太白 | 材質在任何光下都顯得不真實 | 違反能量守恆的 Albedo 值 |
-| Metallic 用漸層灰階 | 邊緣區域材質看起來髒 | Metallic 應該是 0 或 1，過渡用 mask |
+| Metallic 用漸層灰階 | 金屬/非金屬交界可能看起來髒 | 單一材質的基礎 Metallic 通常接近 0 或 1；只有覆蓋混合等情境才使用中間值 |
 | Normal map 在 Gamma 空間 | 光照奇怪、法線計算錯誤 | Normal map 必須設為 Linear |
-| Roughness 對比太強 | 高光分布不自然 | Roughness 感知非線性時需 perceptual roughness = roughness² |
+| Roughness 對比太強 | 高光分布不自然 | 常見 GGX 實作以 alpha = perceptual roughness² 作為微面元參數；引擎可能採不同映射，確認目標 shader 的定義 |
 
 ---
 

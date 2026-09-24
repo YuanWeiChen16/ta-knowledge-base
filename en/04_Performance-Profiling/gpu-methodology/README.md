@@ -13,7 +13,7 @@ CPU Bound: CPU finishes processing a frame; GPU is waiting for CPU
 GPU Bound: GPU finishes rendering a frame; CPU is waiting for GPU
 
 How to determine:
-  Unity  → Profiler → CPU Usage → check Gfx.WaitForPresent time
+  Unity  → inspect CPU/GPU together in Profiler Timeline; WaitForPresent may also mean waiting for VSync
   Unreal → stat unit → check which of Frame/Game/Draw/GPU is highest
 ```
 

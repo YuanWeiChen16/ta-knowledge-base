@@ -35,15 +35,16 @@ print(f"Face count: {poly_count}")
 ```
 
 ### Blender Python (bpy)
+`polygon.use_smooth = True` shades every face smoothly; it does not reproduce the old 30° Auto Smooth edge split. For angle-based sharp edges, use the workflow for your target Blender version.
+
 ```python
 import bpy
 
 # Batch set smoothing for all meshes
 for obj in bpy.data.objects:
     if obj.type == 'MESH':
-        bpy.ops.object.shade_smooth()
-        obj.data.use_auto_smooth = True
-        obj.data.auto_smooth_angle = 0.523599  # 30 degrees
+        for polygon in obj.data.polygons:
+            polygon.use_smooth = True
 
 # Batch export FBX
 bpy.ops.export_scene.fbx(
@@ -75,12 +76,16 @@ node.cook(force=True)
 ## Common Pipeline Script Scenarios
 
 ### Batch Texture Processing (Pillow/OpenCV)
+Only convert dimensions when required by the target platform or texture-streaming workflow; rounding width and height independently can change aspect ratio and resamples the image.
+
 ```python
 from PIL import Image
 import os
+import math
 
 def batch_convert_to_power_of_two(input_dir, output_dir):
-    """Resize all textures to the nearest power of two"""
+    """Resize each texture dimension to the nearest power of two (may change aspect ratio)"""
+    os.makedirs(output_dir, exist_ok=True)
     for filename in os.listdir(input_dir):
         if filename.endswith(('.png', '.jpg', '.tga')):
             img = Image.open(os.path.join(input_dir, filename))

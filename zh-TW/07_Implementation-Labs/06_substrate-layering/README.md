@@ -24,7 +24,7 @@
 ### 必須功能
 1. **底層 Slab**：岩石（高 Roughness、無金屬度、有石頭 Normal）
 2. **上層 Slab**：積雪（高 Roughness、白色 Albedo、不同 Normal）
-3. **Vertical Layering**：用世界法線 Y 分量做 mask，水平面積雪、垂直面露岩石
+3. **Vertical Layering**：用世界法線 Z 分量做 mask（UE 為 Z-up），水平面積雪、垂直面露岩石
 4. **Roughness Tracking**：確認啟用後，雪層厚度影響岩石層的感知粗糙度
 5. **厚度參數**：暴露 Snow Coverage（0-1）參數，控制積雪覆蓋程度
 
@@ -101,12 +101,12 @@ snowMask *= SnowCoverage;                  // 全局覆蓋量
 1. Substrate Vertical Layering 的 Roughness Tracking 具體做了什麼？為什麼厚度影響底層的感知粗糙度？
 2. 同樣的「雪覆岩石」效果，用標準材質 + 手動 lerp 兩套參數能做到嗎？差在哪裡？
 3. Substrate 材質的 GBuffer 是怎麼打包的？為什麼複雜材質不會無限增加 GBuffer 大小？
-4. Substrate 目前（UE5.4）還是 Experimental 狀態，在生產環境你會怎麼評估它的使用風險？
+4. Substrate 的成熟度會隨 UE 版本改變（UE5.5 起為 Beta；請查目標版本文件）。在生產環境你會怎麼評估它的使用風險？
 
 ---
 
 ## 相關資源
 
 - 📄 [SIGGRAPH 2023 Substrate PDF](https://advances.realtimerendering.com/s2023/2023%20Siggraph%20-%20Substrate.pdf)
-- 📖 [Unreal Substrate Documentation](https://docs.unrealengine.com/5.4/en-US/substrate-materials-in-unreal-engine/)
+- 📖 [Unreal Substrate Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/substrate-materials-in-unreal-engine)
 - 🎥 [GDC 2023 Electric Dreams Demo](https://www.youtube.com/watch?v=iX4SbL0XB00) — Substrate 首次公開展示

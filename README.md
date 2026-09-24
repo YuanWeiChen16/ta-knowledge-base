@@ -55,7 +55,7 @@ A structured Technical Artist knowledge base built from GDC, SIGGRAPH, and 80.lv
 - **參考語料庫，不是課程** — 遇到問題來查，不是從頭讀到尾
 - **概念優先，工具為葉** — 按概念層組織，引擎實作是葉節點
 - **穩定性分層** — `[STABLE]` / `[ENGINE-VERSIONED]` / `[VOLATILE]`
-- **作品集驅動** — 每個章節有具體的實作練習和驗收標準
+- **作品集驅動** — 部分章節提供實作練習；`07_Implementation-Labs/` 集中列出具明確驗收標準的實作題
 
 ---
 
@@ -72,7 +72,7 @@ A structured Technical Artist knowledge base built from GDC, SIGGRAPH, and 80.lv
 - Unreal Engine 5.4+（部分 Lab 需要 5.5 for MegaLights）
 - Unity 6 / URP 17
 - Houdini 20+
-- Substance 3D 2024
+- Substance 3D（請依專案使用版本核對匯出預設）
 
 ---
 

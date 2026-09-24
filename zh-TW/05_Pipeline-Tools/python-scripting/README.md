@@ -35,15 +35,16 @@ print(f"Face count: {poly_count}")
 ```
 
 ### Blender Python (bpy)
+`polygon.use_smooth = True` 會對所有面啟用 smooth shading，不會重現舊版 30° Auto Smooth 的硬邊分割；需要角度式硬邊時，請使用目標 Blender 版本的對應工作流。
+
 ```python
 import bpy
 
 # 批次設定所有 mesh 的 smoothing
 for obj in bpy.data.objects:
     if obj.type == 'MESH':
-        bpy.ops.object.shade_smooth()
-        obj.data.use_auto_smooth = True
-        obj.data.auto_smooth_angle = 0.523599  # 30 degrees
+        for polygon in obj.data.polygons:
+            polygon.use_smooth = True
 
 # 批次匯出 FBX
 bpy.ops.export_scene.fbx(
@@ -75,12 +76,16 @@ node.cook(force=True)
 ## 常用 Pipeline 腳本情境
 
 ### 批次貼圖處理（Pillow/OpenCV）
+僅在目標平台或貼圖串流流程要求 2 次方尺寸時才做調整；寬高分別取整可能改變長寬比，也會重採樣影像。
+
 ```python
 from PIL import Image
 import os
+import math
 
 def batch_convert_to_power_of_two(input_dir, output_dir):
-    """將所有貼圖調整為最近的 2 次方尺寸"""
+    """將貼圖各自調整到最近的 2 次方寬高（可能改變長寬比）"""
+    os.makedirs(output_dir, exist_ok=True)
     for filename in os.listdir(input_dir):
         if filename.endswith(('.png', '.jpg', '.tga')):
             img = Image.open(os.path.join(input_dir, filename))

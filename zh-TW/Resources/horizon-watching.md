@@ -1,23 +1,23 @@
 # 前沿技術追蹤
 
 > **`[VOLATILE]` — 每季評估一次。** 這裡的技術發展快速，不代表立即必學，代表值得關注。
-> 最後更新：2025 Q3
+> 最後檢視：2026 Q3。此文件是技術觀察清單，不是完整的產品支援矩陣；功能、版本與平台支援請以連結的官方文件為準。
 
 ---
 
 ## 神經渲染 (Neural Rendering)
 
 ### 3D Gaussian Splatting (3DGS)
-- **是什麼**：用數百萬個 3D 高斯橢球體表示場景，比 NeRF 快 100x
+- **是什麼**：以 3D 高斯表示和渲染場景；和 NeRF 的速度、品質比較取決於資料集與實作，不宜用單一倍數概括
 - **TA 相關性**：掃描真實場景快速生成可視化資產、環境背景
 - **工具**：[Luma AI](https://lumalabs.ai/)、[Polycam](https://poly.cam/)、[gaussian-splatting repo](https://github.com/graphdeco-inria/gaussian-splatting)
-- **引擎支援**：Unreal 有社群插件，Unity 也有實驗性支援
-- **狀態**：尚不適合即時遊戲渲染，但作為場景掃描/參考工具已實用
+- **引擎支援**：依引擎版本與插件而異；正式導入前核對維護狀態、授權和平台支援
+- **狀態**：適合作為場景擷取/參考的候選方案；即時執行能力須按資產與目標硬體驗證
 
 ### AI 貼圖生成
 - **Stable Diffusion + ControlNet**：從參考圖生成 tileable 材質
-- **Adobe Firefly (Substance)**：在 Substance 內整合的 AI 生成
-- **狀態**：輔助工具，不取代 Substance Designer 工作流
+- **Adobe Firefly / Substance AI 功能**：功能與可用性依產品版本、授權及地區而異，使用前查閱產品文件
+- **狀態**：可作為輔助工具評估，不取代程序材質工作流
 
 ---
 
@@ -25,10 +25,10 @@
 
 | 技術 | 廠商 | 狀態 |
 |------|------|------|
-| DLSS 3.5 (Frame Generation) | NVIDIA | ✅ 生產就緒，RTX 40xx |
-| FSR 3 (Fluid Motion Frames) | AMD | ✅ 跨平台 |
-| XeSS | Intel | ✅ 跨平台 |
-| TSR (UE5 內建) | Epic | ✅ 生產就緒 |
+| DLSS | NVIDIA | 升頻、光線重建與影格生成依 DLSS 版本、GPU、遊戲整合而異 |
+| FSR | AMD | 升頻與影格生成依 FSR 版本、GPU、遊戲整合而異 |
+| XeSS | Intel | 可用功能和硬體路徑依版本、GPU 與遊戲整合而異 |
+| TSR | Epic | Unreal Engine 內建時域升頻；品質與成本依版本、解析度及設定而異 |
 
 **TA 影響**：upscaling 現在是效能預算工具，不只是後期優化。設計目標解析度時需考慮。
 
@@ -38,7 +38,7 @@
 
 - **是什麼**：取代傳統 Vertex + Geometry shader 的新管線
 - **核心優勢**：GPU 端 culling 和 LOD 選擇，彈性幾何處理
-- **Nanite 關係**：Nanite 的 meshlet 系統就是建立在 mesh shader 上
+- **Nanite 關係**：Nanite 使用虛擬化幾何與 cluster-based 處理；不要將 Nanite 等同於一般 mesh shader 管線
 - **TA 相關性**：理解 meshlet 概念有助於理解 Nanite 限制
 - **狀態**：引擎已採用，直接寫 mesh shader 仍是進階主題
 
@@ -50,7 +50,7 @@
 - **原理**：從 pose database 搜尋最匹配當前狀態的動畫姿勢，不用手寫 state machine
 - **TA 相關性**：設定 pose database、tuning cost function、處理 blend space
 - **Unity**：Motion Matching 有第三方插件（KinematicCharacterController + Motion Matching）
-- **狀態**：UE5 已生產就緒，Unity 尚在發展中
+- **狀態**：功能與支援依引擎版本/外掛而異；導入前查閱目標版本文件
 
 ---
 
@@ -65,10 +65,10 @@
 
 ## Substrate 材質系統（UE5.3+）
 
-- **是什麼**：取代舊 Material 系統的全新材質架構，支援真正的多層材質
+- **是什麼**：UE5 的模組化材質架構，可組合多層 BSDF；與既有材質系統並存
 - **優勢**：一個材質可以有多個 BSDF layer（皮膚下層 + 上層油脂 + 雨水）
-- **狀態**：UE 5.4 仍是 Experimental，5.5+ 預計轉正式
-- **學習資源**：[Unreal Substrate Documentation](https://docs.unrealengine.com/5.4/en-US/substrate-materials-in-unreal-engine/)
+- **狀態**：UE5.5 起為 Beta；UE5.8 文件仍標示 Beta，正式出貨前依目標版本評估風險
+- **學習資源**：[Unreal Substrate Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/substrate-materials-in-unreal-engine) · [UE5.5 Release Notes](https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-5-release-notes)
 
 ---
 

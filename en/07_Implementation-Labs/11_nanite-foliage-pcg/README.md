@@ -2,7 +2,7 @@
 
 **Difficulty**: ⭐⭐⭐ Senior  
 **Estimated Time**: 1–2 days  
-**Engine Version**: UE5.2+
+**Engine Version**: UE5.2+ (historical workflow; PCG node names and operations vary by version)
 
 ---
 
@@ -14,34 +14,24 @@
 - **Related Talk**: GDC 2023 "New Tools for Building Photoreal Worlds in UE5.2"
   - YouTube: https://www.youtube.com/watch?v=dYk7byKHSRw
 
+> This lab records the GDC 2024 PCG component-assembly and traditional LOD/billboard approach; it is not the UE5.8 Nanite Foliage feature. UE5.8 Nanite Foliage is Experimental and uses systems such as Nanite Assemblies, Voxels, and Skinning. Check the target version's documentation and profile before shipping.
+
 **Key Takeaways**:
 - Why Nanite trees have a memory cost problem (geometry duplication when the same tree is instanced in large numbers)
 - PCG decomposition of trees into components (Trunk + Branch + Leaf Sprig)
 - PCG to Point Data conversion (storing an entire tree's layout as point data)
-- Adjusting Nanite Foliage Dicing Rate
-- Billboard LOD fallback strategy
+- Assembling and scattering trees from PCG components
+- Tradeoffs of traditional LOD/billboard fallbacks (not the current Nanite Foliage distance strategy)
 
 ---
 
 ## Your Task
 
-**Use PCG + Nanite to build a procedural forest where each tree is assembled from components, achieving 90%+ better memory efficiency than traditionally baked trees.**
+**Use PCG + Nanite to build a procedural forest, then compare component assembly against conventional tree assets for disk size, streaming memory, CPU/GPU time, and image quality.**
 
-### Core Insight (from the talk)
+### Core Insight (measure with the target version and assets)
 
-```
-Traditional approach:
-  1 tree = 4.5M triangles (trunk + all branch instances merged) = 150MB on disk
-  
-PCG component approach:
-  Trunk mesh     = 2MB
-  Branch sprig   = 3MB
-  Leaf cluster   = 1MB
-  PCG point data = <1MB (stores only Transform + Mesh reference)
-  
-  Full tree = <7MB, ~95% less than traditional
-  Reason: PCG only stores transforms — geometry is never duplicated
-```
+Do not use asset sizes from a talk or online example as universal baselines. Compare both approaches with the same content, engine version, quality settings, and platform. Record disk size, load/streaming memory, CPU/GPU time, and visual differences separately. Whether PCG reuses geometry depends on the generated data and asset references.
 
 ---
 
@@ -83,6 +73,8 @@ PCG Graph — Tree Assembly:
 ```
 
 ### Phase 4: Billboard LOD Fallback
+
+This phase keeps traditional billboard LOD as a comparison. UE5.8 Nanite Foliage uses a different distant-geometry path; do not treat this step as its setup.
 ```
 Tree LOD chain:
   LOD0 (< 20m):   Full PCG component tree
@@ -100,12 +92,12 @@ Billboard settings:
 
 | Item | Standard |
 |------|----------|
-| Memory | Total component size of a single PCG tree < 10MB (Size on Disk) |
-| Visual | 1km² forest — each tree has natural variation |
+| Memory | Record asset disk size and runtime streaming memory; use no fixed threshold |
+| Visual | Show natural variation in a documented target area and view distance |
 | Functionality | Adjusting PCG parameters (density, species) updates the entire forest in real time |
-| LOD | Distant trees automatically switch to Billboard with no obvious pop |
-| Performance | 1km² forest runs at 60fps at 1080p (PC mid-range) |
-| Nanite | `r.Nanite.Visualize triangles` shows high density up close, low density at distance |
+| LOD | Record the selected LOD/billboard strategy and transition artifacts; if using Nanite Foliage, verify its geometry transitions against that version's docs |
+| Performance | State the hardware, resolution, and frame-rate target, then report reproducible CPU/GPU measurements |
+| Nanite | Use Nanite Visualization available in the target UE version to inspect density and cost |
 
 ---
 
@@ -116,14 +108,7 @@ Mesh Import Settings:
   Build Nanite: ✅
   Two-Sided: ✅ (required for leaves)
 
-Project Settings → Rendering:
-  Nanite Tessellation: ✅ (if displacement is needed)
-
-Console:
-  r.Nanite.DicingRate 1    ← default, highest quality
-  r.Nanite.DicingRate 4    ← reduce resolution (performance optimization)
-  r.Nanite.Visualize overview   ← overview visualization
-  r.Nanite.Visualize triangles  ← triangle density visualization
+Use Nanite Visualization in the target UE version to inspect geometry density and rendering state; setting names, view modes, and displacement support vary by version.
 
 WPO Settings (wind):
   Material → World Position Offset ← wind animation
@@ -135,9 +120,9 @@ WPO Settings (wind):
 
 ## Key Questions (Answer After Completing the Lab)
 
-1. The talk describes the root cause of the memory difference between a traditional merged tree (4.5M tri, 150MB) vs PCG components (<7MB). What role does Nanite's compression play in this?
+1. How do your two tree asset approaches compare for disk size and streaming memory? What are the effects of geometry reuse, Nanite compression, and PCG output?
 2. After the PCG is converted to Point Data, if the original Branch mesh is updated, will the forest auto-update? What iteration pitfalls does this workflow have?
-3. When `r.Nanite.DicingRate` is increased, which visual qualities of Nanite degrade? In what situations should you raise this value?
+3. Use Nanite Visualization to inspect geometry and overdraw at different distances. Which asset settings or leaf materials affect image quality and performance most?
 4. What techniques can make the visual transition between Billboard LOD and Nanite mesh smoother (hint: Dithering LOD transition, Cross-Fade LOD)?
 5. Can this system run on **mobile devices**? What is Nanite's current support status for mobile platforms?
 
@@ -149,3 +134,4 @@ WPO Settings (wind):
 - 🎥 [GDC 2023 New Tools for Photoreal Worlds](https://www.youtube.com/watch?v=dYk7byKHSRw)
 - 📖 [Unreal Nanite Documentation](https://docs.unrealengine.com/5.4/en-US/nanite-virtualized-geometry-in-unreal-engine/)
 - 📖 [Unreal PCG Documentation](https://docs.unrealengine.com/5.4/en-US/procedural-content-generation-overview/)
+- 📖 [Nanite Foliage (UE5.8, Experimental)](https://dev.epicgames.com/documentation/unreal-engine/nanite-foliage)

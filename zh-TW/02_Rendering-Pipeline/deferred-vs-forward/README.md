@@ -29,26 +29,24 @@ Pass 2 (Lighting):  用 G-Buffer 資訊計算所有光源
 
 | 特性 | Forward | Deferred |
 |------|---------|---------|
-| 大量動態光源 | ❌ 貴（每光源 × 每物件）| ✅ 便宜 |
-| MSAA 抗鋸齒 | ✅ 便宜 | ❌ 貴/不相容 |
-| 半透明物件 | ✅ 直接支援 | ❌ 需要 Forward pass 補充 |
-| 行動裝置頻寬 | ✅ 較低 | ❌ G-Buffer 頻寬高 |
-| 自訂光照模型 | ✅ 容易 | ⚠️ 需要 G-Buffer 欄位支援 |
+| 大量動態光源 | 逐物件計算可能成本較高；Forward+ / clustered 可縮小受影響光源集合 | 光照與幾何分開；光照成本仍受解析度、光源與材質影響 |
+| MSAA 抗鋸齒 | 常見支援路徑較直接；仍看引擎/平台 | 額外 G-Buffer 儲存與頻寬成本可能較高，支援度依引擎/平台 |
+| 半透明物件 | 可用 forward shading；成本依 overdraw 和光照方式 | 通常使用獨立 forward/translucency pass，實際行為依引擎 |
+| 行動裝置頻寬 | 可能減少額外 G-Buffer 頻寬 | G-Buffer 會增加頻寬與記憶體需求；裝置和解析度影響顯著 |
+| 自訂光照模型 | 依 shader 路徑與引擎功能而定 | 可能受 G-Buffer 編碼與可用欄位限制 |
 | 延伸：Tiled/Clustered Forward | ✅ 兼具優點 | — |
 
 ---
 
 ## G-Buffer 結構（Deferred 核心）
 
-典型的 G-Buffer layout（以 Unreal 為例）：
+G-Buffer 通常保存後續光照所需的表面屬性與深度。Unreal 的實際 target 數量、格式、channel packing 會依 UE 版本、平台、渲染設定和 Substrate 格式改變；請用目標版本的 Buffer Visualization 或 RenderDoc 檢查，不要依賴固定欄位表。
 
-| Render Target | 儲存內容 |
-|---------------|---------|
-| RT0 (RGBA8) | BaseColor (RGB) + Shading Model ID (A) |
-| RT1 (RGBA8) | Metallic + Specular + Roughness + AO |
-| RT2 (RGB10A2) | World Normal (RGB) + Per-object data |
-| RT3 (R11G11B10)| Emissive / VelocityBuffer |
-| Depth | Scene Depth |
+| 常見資料 | 用途 |
+|----------|------|
+| Base Color、Normal、Roughness、Metallic 等材質屬性 | 延後著色時重建表面反射 |
+| Shading Model / material flags | 決定材質著色路徑 |
+| Depth（以及依管線可用的 Velocity 等資料） | 重建位置、深度測試或後處理 |
 
 **TA 用途**：用 `r.VisualizeBuffer` 指令可以即時查看每個 G-Buffer channel，對材質除錯非常有用。
 
@@ -58,14 +56,14 @@ Pass 2 (Lighting):  用 G-Buffer 資訊計算所有光源
 
 | 管線 | 架構 |
 |------|------|
-| URP | Forward+ (Tiled Forward，URP 14+) |
-| HDRP | Deferred（預設） + Forward 補充半透明 |
+| URP | Forward、Forward+ 或 Deferred；依 Unity/URP 版本與 Renderer 設定 |
+| HDRP | 可依 HDRP Asset 選 Forward 或 Deferred；效果支援與成本依設定 |
 
 ## Unreal 的架構
 
 - **預設**：Deferred Rendering
-- **Mobile**：Forward Rendering（可選）
-- **半透明**：永遠是 Forward pass（疊加在 Deferred 之後）
+- **Mobile**：可用 Mobile Forward 或 Mobile Deferred；預設和支援依目標平台/版本設定
+- **半透明**：常使用獨立的 Forward shading pass；依材質 Lighting Mode 和引擎設定
 
 ---
 
@@ -84,4 +82,4 @@ Pass 2 (Lighting):  用 G-Buffer 資訊計算所有光源
 
 ## 實作練習 (project-ideas)
 
-1. **G-Buffer 分析**：在 Unreal 裡用 `r.VisualizeBuffer` 逐一截圖所有 G-Buffer channel，寫一份說明文件，標注每個 channel 儲存什麼資訊及其用途。
+1. **G-Buffer 分析**：在目標 Unreal 版本使用 Buffer Visualization 或 RenderDoc 檢查實際 G-Buffer，記錄版本、平台、格式與主要資料用途。

@@ -82,7 +82,7 @@ VertexOutput vert(VertexInput v) {
     o.positionCS = mul(UNITY_MATRIX_MVP, v.positionOS);
     o.uv = v.uv;
     // Object → World space 法線
-    o.normalWS = mul((float3x3)unity_ObjectToWorld, v.normalOS);
+    o.normalWS = UnityObjectToWorldNormal(v.normalOS); // 正確處理非等比縮放的法線轉換
     return o;
 }
 ```

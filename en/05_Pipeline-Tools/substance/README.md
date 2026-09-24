@@ -1,6 +1,6 @@
 # Substance Designer & Painter
 
-**Stability Tag**: `[ENGINE-VERSIONED: Substance 3D 2024]`
+**Stability Tag**: `[ENGINE-VERSIONED: Substance 3D; verify the export preset for your project version]`
 
 ---
 
@@ -87,7 +87,7 @@ Output Template: Unity Universal Render Pipeline (Metallic)
 Output textures:
   BaseColor (+ Alpha for Opacity)
   Metallic + Roughness + AO (packed in R G B channels)
-  Normal (DirectX format → Unity uses DirectX)
+  Normal (choose the convention expected by the Unity import setup; OpenGL/Y+ is a common default, so verify the texture and export preset)
 ```
 
 ### Unreal Engine Export
@@ -97,14 +97,14 @@ Output textures:
   BaseColor
   ORM (Occlusion-Roughness-Metallic packed)
   Normal (DirectX format)
-Note: Unreal's Normal and Unity's Y-axis direction are the same (DirectX)
+Note: Unreal commonly uses the DirectX convention; Unity's import convention may differ. Keep the Substance export preset, green channel, and engine import settings consistent.
 ```
 
 ### Normal Map Direction Convention
 ```
-DirectX (Unity, Unreal): Y+ = up (green biased up)
-OpenGL (Blender, Maya default): Y- = up (green biased down)
-Confirm the correct format when exporting, otherwise normal direction will be wrong
+DirectX and OpenGL refer to tangent-space normal-map green-channel conventions; engines, export presets, and importers may handle them differently.
+Unity commonly defaults to the OpenGL convention, while Unreal assets commonly use DirectX. Do not infer the convention from the tool name alone.
+Check the material in the target engine, invert the green channel if needed, and record the export settings.
 ```
 
 ---
@@ -112,6 +112,7 @@ Confirm the correct format when exporting, otherwise normal direction will be wr
 ## Learning Resources
 
 - 📖 [Adobe Substance 3D Documentation](https://helpx.adobe.com/substance-3d-designer/home.html)
+- 📖 [Unity Normal Map Import](https://docs.unity3d.com/6000.1/Documentation/Manual/StandardShaderMaterialParameterNormalMap.html) — Unity normal map import and green-channel handling
 - 🎥 [Stylized Station YouTube](https://www.youtube.com/@StylizedStation) — Substance Designer procedural materials
 - 🎥 [Substance Academy](https://substance3d.adobe.com/tutorials) — Adobe official tutorials
 - 📖 [The PBR Guide (Substance)](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1) — PBR and Substance integration

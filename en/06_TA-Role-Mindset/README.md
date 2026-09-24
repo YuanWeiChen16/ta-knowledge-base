@@ -23,7 +23,7 @@ An artist hits a wall → TA finds a technical solution or alternative.
 
 ### 2. Toolsmith
 Identify what artists are doing repeatedly → write tools to automate it.  
-**The golden question**: "How many times a week does this operation happen?" More than 3 times is worth automating.
+**Ask**: "How often does this happen, how long does each run take, and how error-prone is the current process?" Weigh the time saved against the cost of building and maintaining automation.
 
 ### 3. System Designer
 Define material conventions, naming conventions, LOD specs, performance budgets in pre-production.  
@@ -47,8 +47,8 @@ Define material conventions, naming conventions, LOD specs, performance budgets 
 
 ### Communicating with Artists
 - **Ask about intent first**: "What feeling do you want this material to convey?"
-- **Use visual language**: Don't say "alpha blending expensive" — say "more than 3 transparent layers and mobile frame rate drops 10fps"
-- **Give alternatives**: Don't just say "this can't be done" — say "doing it directly is too expensive, but with [method X] we can achieve 80% of the effect at 10× lower cost"
+- **Communicate measurable evidence**: State the scene, device, resolution, and measurement method; for example, compare how transparent screen coverage affects GPU time on the target device
+- **Give alternatives**: Explain visual differences, measured cost, and tradeoffs between the direct approach and alternatives
 
 ### Communicating with Engineers
 - **Use numbers**: "This pass costs 0.8ms more" is more useful than "it's a bit slower"

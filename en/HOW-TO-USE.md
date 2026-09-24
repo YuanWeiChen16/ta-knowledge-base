@@ -22,13 +22,13 @@ The content has been distilled through three rounds of adversarial review, retai
 ### Scenario A: You Have a Specific Problem
 1. Identify which conceptual layer your problem belongs to (Shader? Lighting? Performance?)
 2. Navigate directly to the corresponding section
-3. Check the README's "Diagnostic Guide" and "Common Pitfalls"
+3. Read the relevant sections in that README. For performance issues, start with the diagnosis flow in `04_Performance-Profiling/`
 
 ### Scenario B: Systematically Strengthening a Domain
 1. Start with `SKILL-MATRIX.md` to assess your current state
 2. Identify your 1-2 weakest areas
-3. Begin with that section's README "Getting Started Path"
-4. Work through the hands-on exercises in `project-ideas.md`
+3. Start with the core concepts or learning resources in that README
+4. Work through its "Hands-On Exercises" section. `07_Implementation-Labs/` contains full implementation briefs and acceptance criteria
 
 ### Scenario C: Just Starting Out in TA
 1. Start with `00_Foundations/`, but **don't get stuck here**
@@ -39,7 +39,7 @@ The content has been distilled through three rounds of adversarial review, retai
 
 ## Stability Tag Reference
 
-Every section's README has a stability tag:
+Sections with version-sensitive material include stability tags. Labs and resource indexes list engine versions or source links separately. Use the version named in a section when following tool instructions:
 
 | Tag | Meaning | Update Frequency |
 |-----|---------|-----------------|
@@ -64,6 +64,8 @@ TA-Knowledge/
 ├── 04_Performance-Profiling/  ← Performance optimization methodology
 ├── 05_Pipeline-Tools/         ← Tool development and automation
 ├── 06_TA-Role-Mindset/        ← TA mindset and career
+├── 07_Implementation-Labs/    ← Industry-inspired labs and acceptance criteria
+├── 08_Programmer-TA-Track/    ← Learning path for programmers moving into TA
 └── Resources/                 ← Curated external resources
 ```
 

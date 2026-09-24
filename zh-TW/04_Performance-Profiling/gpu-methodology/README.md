@@ -13,7 +13,7 @@ CPU Bound：CPU 處理完一幀，GPU 在等 CPU
 GPU Bound：GPU 渲染一幀，CPU 在等 GPU
 
 判斷方式：
-  Unity  → Profiler → CPU Usage → 看 Gfx.WaitForPresent 時間
+  Unity  → Profiler Timeline 同時看 CPU/GPU；WaitForPresent 也可能是等 VSync
   Unreal → stat unit → 看 Frame/Game/Draw/GPU 哪個最大
 ```
 

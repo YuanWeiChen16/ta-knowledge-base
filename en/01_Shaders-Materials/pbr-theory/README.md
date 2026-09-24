@@ -8,7 +8,7 @@
 
 Traditional Phong/Blinn-Phong lighting: artists tweak parameters to make things "look good," but behavior is inconsistent across different lighting environments.
 
-PBR (Physically Based Rendering): based on physical principles, **produces consistent and correct behavior in any lighting environment**.
+PBR (Physically Based Rendering): uses physically motivated material and lighting models to make appearance more predictable across consistently calibrated lighting environments; results still depend on assets, lighting, exposure, and renderer.
 
 ---
 
@@ -38,15 +38,15 @@ High Roughness (rough) → microfacets scattered → blurry diffuse reflection
 ### Metallic (0-1)
 - **0 = Non-metal (Dielectric)**: Albedo has color, specular is nearly white
 - **1 = Metal (Conductor)**: Albedo becomes the specular color, almost no diffuse reflection
-- **In-between values**: Used for transition areas (rust, paint peeling)
+- **In-between values**: Common for material blending, antialiasing, or partial coverage; for rust or peeling paint, prefer layered materials or masks where appropriate
 
 ### Roughness (0-1)
 - **0 = Perfectly smooth**: Mirror reflection
-- **1 = Completely rough**: Full diffuse reflection
-- **Perceptually linear**: Artists generally feel that 0.5 is visually "medium roughness"
+- **1 = Very rough**: Broad, blurred highlights; specular reflection can remain
+- **Perceptual adjustment**: Equal numeric steps in Roughness do not produce equal visual changes; inspect the material with the target shader
 
 ### Albedo (Base Color)
-- Non-metals: reflectance 50-240 sRGB (avoid pure black or pure white)
+- Non-metals: choose plausible reflectance from material references or measurements; there is no fixed sRGB range for every material
 - Metals: specular color (iron = gray, copper = orange, gold = yellow)
 
 ---
@@ -80,9 +80,9 @@ Ambient lighting doesn't come from a single directional light, but from the enti
 | Mistake | Symptom | Cause |
 |---------|---------|-------|
 | Albedo too dark or too bright | Material looks unrealistic under any lighting | Albedo values that violate energy conservation |
-| Using gradient grayscale for Metallic | Edge areas look dirty | Metallic should be 0 or 1; use mask for transitions |
+| Using gradient grayscale for Metallic | Metal/non-metal boundaries may look dirty | Base Metallic is usually near 0 or 1 for a single material; use intermediate values only for coverage blending and similar cases |
 | Normal map in Gamma space | Weird lighting, incorrect normal calculations | Normal maps must be set to Linear |
-| Roughness contrast too strong | Specular distribution is unnatural | Roughness perceptual non-linearity requires perceptual roughness = roughness² |
+| Roughness contrast too strong | Specular distribution is unnatural | Common GGX implementations use alpha = perceptual roughness² as the microfacet parameter; engines may map this differently, so check the target shader |
 
 ---
 

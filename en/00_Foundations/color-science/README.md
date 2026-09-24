@@ -13,10 +13,10 @@
 | | Gamma Space | Linear Space |
 |--|-------------|-------------|
 | Storage | sRGB textures (perceptually uniform) | HDR/Linear textures |
-| Calculations | **Wrong** (lighting calculations cannot be done here) | **Correct** |
+| Calculations | Nonlinear encoded values such as sRGB must be converted to Linear before lighting or color-mixing operations | Lighting and color mixing are commonly calculated in Linear space |
 | Display | Final output to screen | Intermediate calculations |
 
-**Golden Rules**:
+**Basic Rules**:
 1. All lighting calculations happen in Linear space
 2. Albedo/Diffuse textures are sRGB (require engine gamma correction)
 3. Normal/Roughness/Metallic textures are Linear (no correction needed)
@@ -30,7 +30,7 @@
 | Color Space | Usage | Engine Setting |
 |-------------|-------|---------------|
 | **sRGB / Rec.709** | Standard displays, SDR output | Final output |
-| **ACEScg** | High dynamic range working space | UE default working space |
+| **ACEScg** | Wide-gamut linear working space, common in film and compositing | Optional UE working space; default is sRGB / Rec.709 |
 | **Linear sRGB** | Intermediate calculation space | Unity Linear rendering |
 | **Rec.2020** | HDR displays | HDR output settings |
 
@@ -41,8 +41,9 @@
 The process of compressing HDR (high dynamic range) down to the range a screen can display.
 
 Common tonemappers:
-- **ACES**: Film industry standard, UE default. Warm tones, strong contrast
-- **Filmic**: Unity HDRP default. ACES-like but adjustable
+- **Unreal default tonemapper**: Uses an ACES-based tone curve; this does not mean the project working color space is ACEScg
+- **ACES**: A common tone-mapping approach; appearance depends on engine version and settings
+- **Filmic**: The name can refer to different curves across software; verify the implementation and settings
 - **Reinhard**: Simple, prone to overexposure
 - **AgX** (Blender 3.6+): Better highlight preservation
 
@@ -63,16 +64,17 @@ Common tonemappers:
 ### Unity
 ```
 Project Settings → Player → Color Space → Linear  ← must be set to Linear
-Texture Import → sRGB (Color Texture) ← check for Albedo textures
-Texture Import → sRGB (Color Texture) ← uncheck for Normal/Roughness
+Albedo/Base Color ← import as a color texture with sRGB enabled
+Normal ← set the texture type to Normal Map; data maps such as Roughness/Metallic/AO should not be sRGB-decoded
 ```
 
 ### Unreal Engine
 ```
-Project Settings → Rendering → Working Color Space → ACEScg (default)
+Project Settings → Rendering → Working Color Space → sRGB / Rec.709 (default; verify for your UE version)
+ACEScg is an optional project working color space, not the default
 Texture → sRGB ← check for Albedo textures
 Texture → sRGB ← uncheck for Normal/Roughness/Metallic
-Post Process Volume → Tone Curve Amount (ACES intensity adjustment)
+Post Process Volume → Color Grading / tone-curve settings (names and behavior vary by UE version)
 ```
 
 ---
@@ -80,6 +82,7 @@ Post Process Volume → Tone Curve Amount (ACES intensity adjustment)
 ## Learning Resources
 
 - 📖 [Filmic Worlds Blog](http://filmicworlds.com/blog/) — John Hable, in-depth articles on film/game color science
+- 📖 [Unreal Engine Working Color Space](https://dev.epicgames.com/documentation/unreal-engine/working-color-space-in-unreal-engine) — UE working color spaces and defaults
 - 📖 [Color: From Hexcodes to Eyeballs](http://jamie-wong.com/post/color/) — comprehensive color science web article
 - 🎥 [Acerola — Color Science Videos](https://www.youtube.com/@Acerola_t) — game rendering-oriented color science
 

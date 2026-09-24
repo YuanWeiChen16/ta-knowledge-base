@@ -74,12 +74,12 @@
 ```
 Shader Writing:      ███████████ 3
 Material Systems:    ███████████ 3  
-Lighting & GI:       ████████░░░ 2.5
+Lighting & GI:       ███████░░░░ 2
 VFX & Particles:     ███████░░░░ 2
 Performance:         ███████████ 3
-Pipeline & Tools:    ████████░░░ 2.5
+Pipeline & Tools:    ███████░░░░ 2
 Low-Level Concepts:  ███████░░░░ 2
-Math Foundations:    ████████░░░ 2.5
+Math Foundations:    ███████░░░░ 2
 ```
 
 目標是**深度特化 + 廣度夠用**，不是均勻拉滿。

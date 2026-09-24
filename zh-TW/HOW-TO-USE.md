@@ -22,13 +22,13 @@
 ### 情境 A：遇到具體問題
 1. 判斷問題屬於哪個概念層（Shader？Lighting？Performance？）
 2. 直接導航到對應章節
-3. 查看 README 的「診斷指南」和「常見陷阱」
+3. 查看該章 README 中與問題相符的小節；效能問題可從 `04_Performance-Profiling/` 的診斷流程開始
 
 ### 情境 B：系統性補強某個領域
 1. 先看 `SKILL-MATRIX.md`，確認你的現狀
 2. 找到你最弱的 1-2 個領域
-3. 從該章節的 README「入門路徑」開始
-4. 做 `project-ideas.md` 裡的實作練習
+3. 從該章 README 的核心概念或學習資源小節開始
+4. 做 README「實作練習」小節中的練習；`07_Implementation-Labs/` 另有完整實作題與驗收標準
 
 ### 情境 C：剛開始學 TA
 1. 從 `00_Foundations/` 開始，但**不要卡在這裡**
@@ -39,7 +39,7 @@
 
 ## 穩定性標籤說明
 
-每個章節的 README 都有穩定性標籤：
+有明確版本敏感內容的章節會標示穩定性；實作題與資源索引則另列引擎版本或資源連結。閱讀工具步驟時，請以該章標示的版本為準：
 
 | 標籤 | 含義 | 更新頻率 |
 |------|------|---------|
@@ -64,6 +64,8 @@ TA-Knowledge/
 ├── 04_Performance-Profiling/  ← 效能優化方法論
 ├── 05_Pipeline-Tools/         ← 工具開發與自動化
 ├── 06_TA-Role-Mindset/        ← TA 思維與職涯
+├── 07_Implementation-Labs/    ← 業界案例實作與驗收標準
+├── 08_Programmer-TA-Track/    ← 程式師轉 TA 學習路徑
 └── Resources/                 ← 精選外部資源
 ```
 

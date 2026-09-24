@@ -82,7 +82,7 @@ VertexOutput vert(VertexInput v) {
     o.positionCS = mul(UNITY_MATRIX_MVP, v.positionOS);
     o.uv = v.uv;
     // Object → World space normal
-    o.normalWS = mul((float3x3)unity_ObjectToWorld, v.normalOS);
+    o.normalWS = UnityObjectToWorldNormal(v.normalOS); // handles normal transforms under non-uniform scale
     return o;
 }
 ```

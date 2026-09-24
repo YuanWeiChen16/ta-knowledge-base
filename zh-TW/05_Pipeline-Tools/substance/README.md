@@ -1,6 +1,6 @@
 # Substance Designer & Painter
 
-**穩定性標籤**：`[ENGINE-VERSIONED: Substance 3D 2024]`
+**穩定性標籤**：`[ENGINE-VERSIONED: Substance 3D；依專案版本核對匯出預設]`
 
 ---
 
@@ -87,7 +87,7 @@ Output Template: Unity Universal Render Pipeline (Metallic)
 輸出貼圖：
   BaseColor (+ Alpha for Opacity)
   Metallic + Roughness + AO（打包在 R G B channel）
-  Normal (DirectX format → Unity 使用 DirectX)
+  Normal（依 Unity 匯入慣例選格式；常見預設為 OpenGL/Y+，請用實際貼圖與匯出預設核對）
 ```
 
 ### Unreal Engine 匯出
@@ -97,14 +97,14 @@ Output Template: Unreal Engine 4 (Metallic/Roughness)
   BaseColor
   ORM (Occlusion-Roughness-Metallic 打包)
   Normal (DirectX format)
-注意：Unreal 的 Normal 和 Unity 的 Y 軸方向相同（DirectX）
+注意：Unreal 常用 DirectX 慣例；Unity 的匯入慣例可能不同。請確認 Substance 匯出預設、貼圖綠色通道與引擎匯入設定一致。
 ```
 
 ### Normal Map 方向慣例
 ```
-DirectX（Unity、Unreal）：Y+ = 上（綠色偏上）
-OpenGL（Blender、Maya 預設）：Y- = 上（綠色偏下）
-匯出時確認選對格式，否則法線方向錯誤
+DirectX / OpenGL 指的是切線空間法線貼圖的綠色通道慣例；不同引擎、匯出預設與匯入器的處理可能不同。
+Unity 常見預設採 OpenGL 慣例，Unreal 常見資產採 DirectX 慣例；不要只依工具名稱推斷。
+以目標引擎中的材質檢視結果為準，必要時反轉綠色通道並記錄匯出設定。
 ```
 
 ---
@@ -112,6 +112,7 @@ OpenGL（Blender、Maya 預設）：Y- = 上（綠色偏下）
 ## 學習資源
 
 - 📖 [Adobe Substance 3D Documentation](https://helpx.adobe.com/substance-3d-designer/home.html)
+- 📖 [Unity Normal Map Import](https://docs.unity3d.com/6000.1/Documentation/Manual/StandardShaderMaterialParameterNormalMap.html) — Unity 法線貼圖匯入與綠色通道處理
 - 🎥 [Stylized Station YouTube](https://www.youtube.com/@StylizedStation) — Substance Designer 程序材質
 - 🎥 [Substance Academy](https://substance3d.adobe.com/tutorials) — Adobe 官方教學
 - 📖 [The PBR Guide (Substance)](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1) — PBR 和 Substance 整合

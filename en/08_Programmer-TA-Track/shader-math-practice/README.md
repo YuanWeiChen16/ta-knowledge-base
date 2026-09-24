@@ -153,8 +153,8 @@ sqrt, pow, abs, sin, cos, clamp,
 step, smoothstep, floor, ceil
 
 // Key difference
-GLSL: y+ = up (OpenGL Normal Map)
-HLSL: y- = up (DirectX Normal Map)  ← remember this!
+GLSL and HLSL are shader languages and do not determine a normal map's Y-axis convention.
+OpenGL / DirectX conventions describe the tangent-space normal map's green-channel direction; check the export preset and engine importer, and invert the green channel if needed.
 
 // UE5 Material Custom Node
 // No type declarations needed — just return directly:

@@ -1,23 +1,23 @@
 # Emerging Technology Watch
 
 > **`[VOLATILE]` — Review quarterly.** The technologies here evolve rapidly. This doesn't mean they require immediate study — it means they're worth monitoring.
-> Last updated: 2025 Q3
+> Last reviewed: 2026 Q3. This is a watchlist, not a complete product support matrix; verify feature, version, and platform support in the linked official documentation.
 
 ---
 
 ## Neural Rendering
 
 ### 3D Gaussian Splatting (3DGS)
-- **What it is**: Represents scenes using millions of 3D Gaussian ellipsoids — 100× faster than NeRF
+- **What it is**: Represents and renders scenes using 3D Gaussians; speed and quality comparisons with NeRF depend on the dataset and implementation, so avoid a single blanket multiplier
 - **TA relevance**: Quickly generate visual assets from real-world scans, environment backgrounds
 - **Tools**: [Luma AI](https://lumalabs.ai/), [Polycam](https://poly.cam/), [gaussian-splatting repo](https://github.com/graphdeco-inria/gaussian-splatting)
-- **Engine support**: Unreal has community plugins, Unity has experimental support
-- **Status**: Not yet suitable for real-time game rendering, but already practical as a scene scanning/reference tool
+- **Engine support**: Varies by engine version and plugin; verify maintenance, licensing, and platform support before adoption
+- **Status**: A candidate for scene capture/reference workflows; validate real-time use with the assets and target hardware
 
 ### AI Texture Generation
 - **Stable Diffusion + ControlNet**: Generate tileable materials from reference images
-- **Adobe Firefly (Substance)**: AI generation integrated inside Substance
-- **Status**: Supplementary tool, does not replace Substance Designer workflows
+- **Adobe Firefly / Substance AI features**: Availability and functionality vary by product version, subscription, and region; check current product documentation
+- **Status**: Evaluate as an optional aid; it does not replace procedural material workflows
 
 ---
 
@@ -25,10 +25,10 @@
 
 | Technology | Vendor | Status |
 |------------|--------|--------|
-| DLSS 3.5 (Frame Generation) | NVIDIA | ✅ Production ready, RTX 40xx |
-| FSR 3 (Fluid Motion Frames) | AMD | ✅ Cross-platform |
-| XeSS | Intel | ✅ Cross-platform |
-| TSR (built into UE5) | Epic | ✅ Production ready |
+| DLSS | NVIDIA | Upscaling, ray reconstruction, and frame generation vary by DLSS version, GPU, and game integration |
+| FSR | AMD | Upscaling and frame generation vary by FSR version, GPU, and game integration |
+| XeSS | Intel | Available features and hardware paths vary by version, GPU, and game integration |
+| TSR | Epic | Temporal upscaling built into Unreal Engine; quality and cost vary by version, resolution, and settings |
 
 **TA impact**: Upscaling is now a performance budget tool, not just a late-stage optimization. Target resolution must account for this.
 
@@ -38,7 +38,7 @@
 
 - **What they are**: New pipeline replacing traditional Vertex + Geometry shaders
 - **Core advantages**: GPU-side culling and LOD selection, flexible geometry processing
-- **Nanite connection**: Nanite's meshlet system is built on mesh shaders
+- **Nanite connection**: Nanite uses virtualized geometry and cluster-based processing; it should not be equated with a general mesh-shader pipeline
 - **TA relevance**: Understanding meshlet concepts helps you understand Nanite limitations
 - **Status**: Engines have adopted this; directly writing mesh shaders is still an advanced topic
 
@@ -50,7 +50,7 @@
 - **Principle**: Searches a pose database for the best-matching animation pose for the current state — no hand-crafted state machines required
 - **TA relevance**: Setting up pose databases, tuning cost functions, handling blend spaces
 - **Unity**: Motion Matching available via third-party plugins (KinematicCharacterController + Motion Matching)
-- **Status**: UE5 production ready, Unity still in development
+- **Status**: Features and support vary by engine version/plugin; check the target version's documentation
 
 ---
 
@@ -65,10 +65,10 @@
 
 ## Substrate Material System (UE5.3+)
 
-- **What it is**: Brand-new material architecture replacing the old Material system, supports true multi-layer materials
+- **What it is**: UE5's modular material framework for composing layered BSDFs; it coexists with the existing material system
 - **Advantages**: One material can have multiple BSDF layers (skin underlayer + surface oil + rain water)
-- **Status**: UE 5.4 still Experimental; 5.5+ expected to become official
-- **Learning resources**: [Unreal Substrate Documentation](https://docs.unrealengine.com/5.4/en-US/substrate-materials-in-unreal-engine/)
+- **Status**: Beta starting in UE5.5; UE5.8 documentation still labels it Beta. Assess risk for the target version before shipping.
+- **Learning resources**: [Unreal Substrate Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/substrate-materials-in-unreal-engine) · [UE5.5 Release Notes](https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-5-release-notes)
 
 ---
 

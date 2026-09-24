@@ -20,7 +20,7 @@
 ```
 CPU Usage → 展開 Rendering：
   Camera.Render          ← 整個渲染的 CPU 成本
-  Gfx.WaitForPresent     ← CPU 等 GPU（GPU Bound 的指標）
+  Gfx.WaitForPresentOnGfxThread ← 可能在等 VSync 或 GPU；不能單獨判定 GPU Bound
   
 Rendering Module：
   Batches                ← Draw Call 數（越少越好）
@@ -83,7 +83,7 @@ Rendering Module：
 | 問題 | 工具 |
 |------|------|
 | 找最貴的 Draw Call | Frame Debugger |
-| CPU vs GPU bound | Profiler → Gfx.WaitForPresent |
+| CPU vs GPU bound | Profiler Timeline + GPU Usage；搭配目標平台 profiler 判讀 |
 | 記憶體用量 | Memory Profiler |
 | Draw Call 數量 | Profiler Rendering Module |
 | Shader 複雜度 | RenderDoc + Shader Inspector |

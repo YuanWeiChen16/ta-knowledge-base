@@ -20,7 +20,7 @@
 ```
 CPU Usage → expand Rendering:
   Camera.Render          ← total CPU cost of rendering
-  Gfx.WaitForPresent     ← CPU waiting for GPU (indicator of GPU Bound)
+  Gfx.WaitForPresentOnGfxThread ← may wait for VSync or the GPU; not sufficient by itself to identify a GPU bottleneck
   
 Rendering Module:
   Batches                ← Draw Call count (lower is better)
@@ -83,7 +83,7 @@ Install: `Package Manager → Memory Profiler`
 | Problem | Tool |
 |---------|------|
 | Find most expensive Draw Call | Frame Debugger |
-| CPU vs GPU bound | Profiler → Gfx.WaitForPresent |
+| CPU vs GPU bound | Profiler Timeline + GPU Usage; cross-check with the target platform's profiler |
 | Memory usage | Memory Profiler |
 | Draw Call count | Profiler Rendering Module |
 | Shader complexity | RenderDoc + Shader Inspector |

@@ -24,7 +24,7 @@
 ### Required Features
 1. **Base Slab**: Rock (high Roughness, no metalness, stone Normal)
 2. **Top Slab**: Snow (high Roughness, white Albedo, distinct Normal)
-3. **Vertical Layering**: Use the world normal Y component as a mask — snow on horizontal surfaces, rock exposed on vertical surfaces
+3. **Vertical Layering**: Use world normal Z as the mask (Unreal is Z-up) — snow on horizontal surfaces, rock exposed on vertical surfaces
 4. **Roughness Tracking**: Confirm it is enabled and that snow layer thickness influences the perceived roughness of the rock layer beneath
 5. **Thickness Parameter**: Expose a Snow Coverage (0–1) parameter to control how much snow covers the surface
 
@@ -101,12 +101,12 @@ snowMask *= SnowCoverage;                  // global coverage amount
 1. What exactly does Roughness Tracking do in Substrate Vertical Layering? Why does top layer thickness influence the perceived roughness of the layer below?
 2. Could the same "snow-covered rock" effect be achieved with a standard material + manual lerp between two parameter sets? What's the difference?
 3. How is the Substrate material's GBuffer packed? Why doesn't a complex material infinitely increase the GBuffer size?
-4. Substrate is still Experimental as of UE5.4. How would you evaluate the risk of using it in a production environment?
+4. Substrate maturity changes by UE version (Beta starting in UE5.5; check the target version's documentation). How would you evaluate its production risk?
 
 ---
 
 ## Related Resources
 
 - 📄 [SIGGRAPH 2023 Substrate PDF](https://advances.realtimerendering.com/s2023/2023%20Siggraph%20-%20Substrate.pdf)
-- 📖 [Unreal Substrate Documentation](https://docs.unrealengine.com/5.4/en-US/substrate-materials-in-unreal-engine/)
+- 📖 [Unreal Substrate Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/substrate-materials-in-unreal-engine)
 - 🎥 [GDC 2023 Electric Dreams Demo](https://www.youtube.com/watch?v=iX4SbL0XB00) — first public showcase of Substrate

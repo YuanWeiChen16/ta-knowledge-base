@@ -2,7 +2,7 @@
 
 **Difficulty**: ⭐⭐⭐⭐ Senior+  
 **Estimated Time**: 3–5 days  
-**Engine Version**: UE5.5+ (MegaLights full release)
+**Engine Version**: UE5.5+ (feature status and settings vary by version; Experimental in UE5.5, so check the target version's documentation)
 
 ---
 
@@ -16,6 +16,8 @@
 
 **Reading focus**: The Weighted Reservoir Sampling principle for light selection, why MegaLights is better suited for large numbers of lights than traditional Shadow Map approaches, how Area Light Guiding (2×2 bitmask) reduces wasted rays, and how Tile Classification reduces register pressure.
 
+> MegaLights targets scenes with many dynamic lights, but is not guaranteed to be faster in every scene. UE5.5 documentation requires Hardware Ray Tracing and SM6; verify requirements and supported light/shadow settings for the target UE version.
+
 ---
 
 ## Your Task
@@ -24,7 +26,7 @@
 
 ### Scene Design Requirements
 An interior scene (e.g., factory, dungeon, neon street), containing:
-- **At least 50 dynamic point lights / area lights** (this would immediately break traditional approaches)
+- **At least 50 dynamic point / area lights** (to compare cost at different light counts; do not assume a traditional approach is always unusable)
 - **Mixed light types**: at least 5 each of Point Light, Spot Light, and Rect Light
 - **Heavy shadow requirements**: all lights cast dynamic shadows (this is exactly MegaLights' design target)
 - **Dynamic elements**: moving objects in the scene (NPCs, rotating machinery, etc.) to verify dynamic shadow correctness
@@ -34,37 +36,20 @@ An interior scene (e.g., factory, dungeon, neon street), containing:
 ## Three-Phase Experiment Workflow
 
 ### Phase 1: Baseline (Traditional Approach)
-```
-Disable MegaLights:
-r.MegaLights.Enable 0
 
-Record:
+Disable MegaLights in Project Settings → Rendering → Direct Lighting, and check that a Post Process Volume override does not re-enable it. Record:
+
 - Light count vs GPU time (start at 5 lights, add 5 at a time, up to 50)
 - GPU Visualizer screenshot (Shadow Depths Pass time)
 - Visual quality screenshots
-```
 
 ### Phase 2: Enable MegaLights
-```
-Enable MegaLights:
-r.MegaLights.Enable 1
-r.MegaLights.SamplesPerPixel 1  ← default value
+Enable MegaLights in Project Settings → Rendering → Direct Lighting; record project, light, and Post Process Volume settings.
 
 Record the same metrics and compare against Phase 1.
-```
 
 ### Phase 3: MegaLights Quality Tuning
-```
-Test quality/performance tradeoffs at different settings:
-r.MegaLights.SamplesPerPixel 1   ← console / low-spec
-r.MegaLights.SamplesPerPixel 2   ← PC low settings
-r.MegaLights.SamplesPerPixel 4   ← PC high settings
-
-Denoiser settings:
-r.MegaLights.Denoiser 1
-
-Record: GPU time + noise screenshots for each setting
-```
+Tune quality using the project, Post Process Volume, and Light Component settings available in the target UE version. Change one setting at a time and record its name, GPU time, and noise screenshots. Do not assume Console Variables are identical across versions.
 
 ---
 
@@ -117,25 +102,13 @@ Fill in the following table based on your experimental data:
 
 ---
 
-## Key Console Commands
+## Profiling Tools
 
 ```
-// Toggle MegaLights
-r.MegaLights.Enable 0/1
-
-// Quality settings
-r.MegaLights.SamplesPerPixel 1/2/4
-r.MegaLights.Denoiser 0/1
-
-// Visualization (UE5.5+)
-r.MegaLights.Visualize.LightSamples 1   ← show sample points
-r.MegaLights.Visualize.Denoised 1       ← show denoised result
-
-// Related profiling
 stat GPU
 ProfileGPU
-r.VisualizeOverdraw 1
 ```
+Use Project Settings, Post Process Volume, and Light Component options documented for the target UE version to control MegaLights, shadow methods, and available quality settings. Do not assume Console Variables are identical across versions.
 
 ---
 
@@ -143,5 +116,6 @@ r.VisualizeOverdraw 1
 
 - 📄 [SIGGRAPH 2025 MegaLights PDF](https://advances.realtimerendering.com/s2025/content/MegaLights_Stochastic_Direct_Lighting_2025.pdf)
 - 🎥 [SIGGRAPH 2025 MegaLights Talk](https://www.youtube.com/watch?v=dmmN8_c8Tb0)
-- 📖 [Unreal MegaLights Documentation](https://docs.unrealengine.com/5.5/en-US/megalights-in-unreal-engine/)
+- 📖 [Unreal MegaLights Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/megalights-in-unreal-engine)
+- 📖 [Unreal Engine 5.5 Release Notes](https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-5-release-notes)
 - 📄 [ReSTIR Paper (MegaLights comparison approach)](https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct)

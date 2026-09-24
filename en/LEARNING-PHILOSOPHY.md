@@ -9,7 +9,7 @@ Core principles that survived three rounds of adversarial review.
 **The biggest mistake**: treating this folder as a textbook to read from beginning to end.
 
 Correct usage: encounter a problem → come here for answers → read with the context of your problem.  
-One hour of reading with a real problem beats ten hours of passive reading.
+Reading with a concrete question often makes it easier to connect concepts to implementation than reading from beginning to end without a goal.
 
 ---
 
@@ -25,8 +25,7 @@ People who start with nodes often understand what's happening underneath much fa
 
 ## 3. Profile First, Then Optimize
 
-Don't touch any shader optimization before opening RenderDoc or Unreal Insights.  
-The bottleneck you think exists is almost never the real bottleneck.
+Establish a reproducible performance baseline with a profiler on the target platform before deciding whether to change a shader. RenderDoc, Unreal Insights, and engine profilers serve different diagnostic needs.
 
 **Rule**: Optimization without profiler data is guessing, not engineering.
 
@@ -77,6 +76,6 @@ This means:
 ## 8. Portfolio-Driven Learning
 
 Every time you learn a concept, ask yourself: "What demonstrable thing can I make with this?"  
-Check each section's `project-ideas.md` — the exercises there have real production constraints (platform, ms budget, polygon limits).
+Check each README's "Hands-On Exercises" section. `07_Implementation-Labs/` contains fuller task briefs and acceptance criteria. Treat performance figures as exercise targets and record the test platform and settings.
 
 Without a portfolio, knowledge is just knowledge.

@@ -13,10 +13,10 @@ VFX 必須在 1/30 秒內讓玩家理解「發生了什麼」。
 - 動態曲線 > 靜態精緻（一個爆炸的 easing 比貼圖解析度更重要）
 
 ### 2. 效能預算先定義，再製作
-每個 VFX 都要有明確的 ms budget 和 particle count budget：
-- **Foreground / Hero VFX**（技能、爆炸）：最多 2ms, 500 粒子
-- **Background / Ambient VFX**（環境煙塵、火焰）：最多 0.5ms, 100 粒子/實例
-- **UI VFX**：不佔 GPU 預算，但佔 overdraw
+每個 VFX 都要依目標裝置、畫面更新率與同時出現數量訂定 CPU/GPU 時間、粒子數和 overdraw 預算。下列數值只能當起始範例，需在目標平台量測調整：
+- **Foreground / Hero VFX**（技能、爆炸）：例如先以 2ms、500 粒子作為單一效果的測量起點
+- **Background / Ambient VFX**（環境煙塵、火焰）：例如先以 0.5ms、100 粒子/實例作為起點
+- **UI VFX**：同樣消耗 GPU 與 fill rate；依解析度、混合方式與覆蓋範圍量測
 
 ### 3. 視覺衝擊 = Shape + Motion + Timing
 - **Shape**：剪影清晰、有方向性
@@ -40,8 +40,8 @@ VFX 必須在 1/30 秒內讓玩家理解「發生了什麼」。
 - 10個這樣的粒子疊加 = 2000萬 blend 操作/幀
 
 **解法**：
-1. 縮小粒子尺寸 + 增加粒子數（同樣視覺效果，更少 overdraw）
-2. 使用 Depth Fade（邊緣漸出）減少每個粒子的不透明面積
+1. 減少粒子的螢幕覆蓋範圍與彼此重疊；粒子數增加不一定能降低 overdraw
+2. 使用 Depth Fade 改善與場景交界的視覺接縫；它不會自動減少 overdraw
 3. 限制粒子最大尺寸（行動裝置通常 < 1/4 螢幕面積）
 
 ---

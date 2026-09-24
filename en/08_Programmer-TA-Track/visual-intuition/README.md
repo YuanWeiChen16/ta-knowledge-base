@@ -102,8 +102,8 @@ Complementary color rule (quick way to add contrast):
   - Cool light (moonlight blue) → warm shadows (brown-orange) = dramatic feel
 
 PBR color constraints (important!):
-  Non-metal Albedo: sRGB 50-240 (avoid pure black or pure white)
-  Metal Albedo: high reflectance — iron=gray(0.56), gold=yellow(1.0,0.71,0.29), copper=orange(0.95,0.64,0.54)
+  Base Color: use material references or measurements; confirm whether values are Linear or sRGB
+  Metal Base Color: represents the colored conductor response; verify references for the chosen shader and color space
 ```
 
 ---

@@ -13,10 +13,10 @@ VFX must communicate "what's happening" to the player within 1/30th of a second.
 - Motion curves > Static fidelity (the easing on an explosion matters more than texture resolution)
 
 ### 2. Define Performance Budget Before Creating
-Every VFX must have a clear ms budget and particle count budget:
-- **Foreground / Hero VFX** (skills, explosions): max 2ms, 500 particles
-- **Background / Ambient VFX** (environmental smoke, fire): max 0.5ms, 100 particles per instance
-- **UI VFX**: doesn't consume GPU budget, but consumes overdraw
+Set CPU/GPU time, particle-count, and overdraw budgets for the target device, frame rate, and expected simultaneous effects. Treat these as starting examples and measure on the target platform:
+- **Foreground / Hero VFX** (skills, explosions): for example, start by measuring a single effect against 2ms and 500 particles
+- **Background / Ambient VFX** (environmental smoke, fire): for example, start with 0.5ms and 100 particles per instance
+- **UI VFX**: also consumes GPU time and fill rate; measure for the resolution, blend mode, and screen coverage
 
 ### 3. Visual Impact = Shape + Motion + Timing
 - **Shape**: clear silhouette, has directionality
@@ -40,8 +40,8 @@ Every transparent particle pixel must be blended:
 - 10 such particles stacked = 20 million blend operations/frame
 
 **Solutions**:
-1. Smaller particle size + more particles (same visual, less overdraw)
-2. Use Depth Fade (edge fade-out) to reduce the opaque area of each particle
+1. Reduce particles' screen-space coverage and overlap; adding particles does not necessarily reduce overdraw
+2. Use Depth Fade to improve visual intersections with scene geometry; it does not automatically reduce overdraw
 3. Limit maximum particle size (usually < 1/4 screen area on mobile)
 
 ---

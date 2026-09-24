@@ -153,8 +153,8 @@ sqrt, pow, abs, sin, cos, clamp,
 step, smoothstep, floor, ceil
 
 // 特殊差異
-GLSL: y+ = 上（OpenGL Normal Map）
-HLSL: y- = 上（DirectX Normal Map）← 記住這個！
+GLSL 和 HLSL 是著色語言，不能用來判定法線貼圖的 Y 軸慣例。
+OpenGL / DirectX 慣例描述切線空間 Normal Map 的綠色通道方向；依貼圖匯出設定與引擎匯入器確認，必要時反轉綠色通道。
 
 // UE5 Material Custom Node
 // 不需要宣告型別，直接 return：

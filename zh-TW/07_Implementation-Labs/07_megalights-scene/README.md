@@ -2,7 +2,7 @@
 
 **難度**：⭐⭐⭐⭐ Senior+  
 **預估時間**：3-5 天  
-**引擎版本**：UE5.5+（MegaLights 正式版）
+**引擎版本**：UE5.5+（功能狀態與設定依版本變動；UE5.5 為 Experimental，開始前查閱目標版本文件）
 
 ---
 
@@ -16,6 +16,8 @@
 
 **閱讀重點**：Weighted Reservoir Sampling 光源選擇原理、為什麼 MegaLights 比傳統 Shadow Map 方案更適合大量光源、Area Light Guiding（2×2 bitmask）如何減少無效 ray、以及 Tile Classification 如何降低 register pressure。
 
+> MegaLights 面向大量動態光源，但不保證所有場景都更快。UE5.5 文件要求 Hardware Ray Tracing 與 SM6；請依目標 UE 版本確認需求與可用光源/陰影設定。
+
 ---
 
 ## 你的任務
@@ -24,7 +26,7 @@
 
 ### 場景設計要求
 一個室內場景（如工廠、地下城、霓虹街道），包含：
-- **至少 50 個動態點光源 / 區域光源**（這在傳統方案下會直接爆炸）
+- **至少 50 個動態點光源 / 區域光源**（用來比較不同光源數量下的成本；不要預設傳統方案必定無法使用）
 - **混合光源類型**：Point Light、Spot Light、Rect Light 各至少 5 個
 - **大量陰影要求**：所有光源都有動態陰影（這正是 MegaLights 的設計目標）
 - **動態元素**：場景中有移動物件（NPC、旋轉機械等），驗證動態陰影正確性
@@ -34,37 +36,20 @@
 ## 三階段實驗流程
 
 ### 階段 1：基準線（傳統方案）
-```
-關閉 MegaLights：
-r.MegaLights.Enable 0
 
-記錄：
+在 Project Settings → Rendering → Direct Lighting 關閉 MegaLights，並確認 Post Process Volume 覆寫未重新啟用。記錄：
+
 - 光源數量 vs GPU 時間（從 5 個開始，每次 +5，記到 50 個）
 - GPU Visualizer 截圖（Shadow Depths Pass 時間）
 - 視覺品質截圖
-```
 
 ### 階段 2：啟用 MegaLights
-```
-啟用 MegaLights：
-r.MegaLights.Enable 1
-r.MegaLights.SamplesPerPixel 1  ← 預設值
+在 Project Settings → Rendering → Direct Lighting 啟用 MegaLights；記錄專案、光源與 Post Process Volume 設定。
 
 記錄相同指標，與階段 1 對比。
-```
 
 ### 階段 3：MegaLights 品質調優
-```
-測試不同設定的品質/效能 tradeoff：
-r.MegaLights.SamplesPerPixel 1   ← Console
-r.MegaLights.SamplesPerPixel 2   ← PC 低設定
-r.MegaLights.SamplesPerPixel 4   ← PC 高設定
-
-Denoiser 設定：
-r.MegaLights.Denoiser 1
-
-記錄：每個設定的 GPU 時間 + 噪點截圖
-```
+依目標 UE 版本可用的專案、Post Process Volume 與 Light Component 設定調整品質；每次只改一項，記錄設定名稱、GPU 時間與噪點截圖。不要假設各版本都有相同的 Console Variable。
 
 ---
 
@@ -117,25 +102,13 @@ r.MegaLights.Denoiser 1
 
 ---
 
-## 重要 Console 命令
+## 效能分析工具
 
 ```
-// 開關 MegaLights
-r.MegaLights.Enable 0/1
-
-// 品質設定
-r.MegaLights.SamplesPerPixel 1/2/4
-r.MegaLights.Denoiser 0/1
-
-// 視覺化 (UE5.5+)
-r.MegaLights.Visualize.LightSamples 1   ← 顯示採樣點
-r.MegaLights.Visualize.Denoised 1       ← 顯示降噪結果
-
-// 相關效能分析
 stat GPU
 ProfileGPU
-r.VisualizeOverdraw 1
 ```
+MegaLights 的開關、陰影方法與可用品質設定請使用目標 UE 版本文件列出的 Project Settings、Post Process Volume 和 Light Component 選項；不要假設跨版本 Console Variable 相同。
 
 ---
 
@@ -143,5 +116,6 @@ r.VisualizeOverdraw 1
 
 - 📄 [SIGGRAPH 2025 MegaLights PDF](https://advances.realtimerendering.com/s2025/content/MegaLights_Stochastic_Direct_Lighting_2025.pdf)
 - 🎥 [SIGGRAPH 2025 MegaLights 演講影片](https://www.youtube.com/watch?v=dmmN8_c8Tb0)
-- 📖 [Unreal MegaLights Documentation](https://docs.unrealengine.com/5.5/en-US/megalights-in-unreal-engine/)
+- 📖 [Unreal MegaLights Documentation (UE5.8)](https://dev.epicgames.com/documentation/unreal-engine/megalights-in-unreal-engine)
+- 📖 [Unreal Engine 5.5 Release Notes](https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-5-release-notes)
 - 📄 [ReSTIR 論文（MegaLights 的對比方案）](https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct)

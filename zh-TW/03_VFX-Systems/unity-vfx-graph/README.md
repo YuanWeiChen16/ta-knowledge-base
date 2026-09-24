@@ -6,7 +6,7 @@
 
 ## VFX Graph vs Particle System（Shuriken）
 
-| | VFX Graph | Particle System (ShurikanS) |
+| | VFX Graph | Particle System (Shuriken) |
 |--|-----------|--------------------------|
 | 執行位置 | GPU（Compute Shader）| CPU |
 | 粒子數上限 | 數百萬 | 數萬 |

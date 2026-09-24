@@ -74,12 +74,12 @@ The real skill distribution of a Senior TA typically looks like this (not maxed 
 ```
 Shader Writing:      ███████████ 3
 Material Systems:    ███████████ 3  
-Lighting & GI:       ████████░░░ 2.5
+Lighting & GI:       ███████░░░░ 2
 VFX & Particles:     ███████░░░░ 2
 Performance:         ███████████ 3
-Pipeline & Tools:    ████████░░░ 2.5
+Pipeline & Tools:    ███████░░░░ 2
 Low-Level Concepts:  ███████░░░░ 2
-Math Foundations:    ████████░░░ 2.5
+Math Foundations:    ███████░░░░ 2
 ```
 
 The goal is **deep specialization + broad enough coverage**, not an even distribution across all areas.
