@@ -90,3 +90,34 @@
 產業橫向,—,程式,反作弊,Easy Anti-Cheat,授權（Epic 免費）,🟡,B,27,2026-10-06,Fortnite/ELDEN RING/Apex 等
 產業橫向,—,程式,反作弊,BattlEye,授權,🔴,B,27,2026-10-06,R6 Siege / Tarkov / ARK
 產業橫向,—,程式,反作弊,Denuvo Anti-Cheat,授權,🔴,B,27,2026-10-06,ARC Raiders / THE FINALS
+日本,CAPCOM,音效,DAW,DAW（Pro Tools 等）與波形編輯軟體實務,授權,🟢,A,36,2026-10-06,サウンドデザイナー（効果音）必須欄
+日本,CAPCOM,音效,經驗,家用主機／電影／TV／動畫任一的效果音製作經驗,—,🟢,A,36,2026-10-06,必須欄
+日本,CAPCOM,音效,中介軟體,Wwise,授權,🟢,A,36,2026-10-06,歓迎欄；同一 JD 未提及 CRI ADX
+日本,CAPCOM,音效,技法,Foley（含錄音）,—,🟢,A,36,2026-10-06,歓迎欄
+日本,CAPCOM,美術,門檻,角色製作相關知識／技術／實務經驗（不指定工具）,—,🟢,A,38,2026-10-06,キャラクターモデラー（大阪）必須欄
+日本,CAPCOM,美術,DCC,Maya 等多種 DCC 使用經驗,授權,🟢,A,38,2026-10-06,歓迎欄
+日本,CAPCOM,美術,圖學,Shader／Script 知識,—,🟢,A,38,2026-10-06,歓迎欄
+日本,Bandai Namco Studios,音效,中介軟體,UE + Wwise、CRI ADX,授權,🟢,A,37,2026-10-06,サウンドデザイナー必須欄（兩者皆列）
+日本,Bandai Namco Studios,音效,技法,Foley／MA／環繞聲製作、音響工程知識,—,🟢,A,37,2026-10-06,必須欄
+日本,Bandai Namco Studios,音效,DAW,Pro Tools / Reaper / Nuendo,授權,🟢,A,37,2026-10-06,歓迎欄；Reaper 獲 A 級佐證
+日本,Bandai Namco Studios,音效,引擎,Unreal Engine / Unity,授權,🟢,A,37,2026-10-06,歓迎欄
+日本,Cygames,美術,DCC,Maya / 3ds Max / Softimage / Blender（擇一）3DCG 實務 2 年以上,授權/開源,🟢,A,39,2026-10-06,3DCG・キャラクターアーティスト必須欄；Blender 在必須欄
+日本,Cygames,美術,DCC,ZBrush / Substance / Houdini / MotionBuilder,授權,🟢,A,39,2026-10-06,歓迎欄
+日本,Cygames,美術,材質,PBR 材質設定、Substance Designer,授權,🟢,B,40,2026-10-06,背景アーティスト歓迎欄；年収 400–1000 萬円
+日本,SEGA,音效,中介軟體,音訊中介軟體或遊戲引擎（UE/Unity 等）的音效實裝經驗,授權,🟢,B,41,2026-10-06,技術本部サウンドデザイナー必須欄；想定配属 龍が如く／ソニック
+日本,SEGA,音效,經驗,1 款以上家用主機遊戲的音效開發經驗,—,—,B,41,2026-10-06,必須欄
+日本,FromSoftware,美術,DCC,3ds Max / ZBrush（入社後使用；應徵時不問使用軟體）,授權,🟢,B,42,2026-10-06,背景 3D 藝術家；年収 400–800 萬円
+日本,FromSoftware,音效,門檻,遊戲開發或影像製作 1 年以上，或 IT 業 3 年以上,—,—,B,43,2026-10-06,サウンドデザイナー／コンポーザー
+中國,miHoYo / HoYoverse,美術,DCC,3ds Max / Maya / ZBrush / Substance Painter / Marvelous Designer（皆需熟練）,授權,🟢,C,44,2026-10-06,3D 角色（次世代 PBR）建模師；2 年以上
+中國,miHoYo / HoYoverse,美術,引擎,Unreal Engine（需能獨立完成引擎內資產調整）,授權,🟢,C,44,2026-10-06,該職缺用 UE 而非 Unity
+歐美,EA / Electronic Arts,原始碼釋出,遊戲本體,Command & Conquer: Tiberian Dawn + Red Alert,官方釋出 GPLv3（2020-06）,🟢,B,45,2026-10-06,唯一一筆主動釋出；不含美術資產與引擎本體；Wikipedia 兩份清單皆未收錄
+歐美,Epic Games,原始碼釋出,遊戲本體,ZZT（1991，Potomac Computer Systems）,官方釋出 MIT（2023）,🟢,B,46,2026-10-06,
+歐美,Epic Games,原始碼釋出,外流,Gears of War,外流非釋出,🔴,B,46,2026-10-06,不可作為合法學習素材
+歐美,EA / Electronic Arts,原始碼釋出,外流,B.O.B. / FIFA 97 / F.A. Premier League Stars / FIFA 21,外流或誤放非釋出,🔴,B,46,2026-10-06,FIFA 21 為 2021 年勒索軟體外洩
+日本,任天堂,原始碼釋出,外流,Donkey Kong（Atari 8-bit 版 6502 組語，2008 論壇）,非官方,🔴,B,46,2026-10-06,
+日本,SEGA,原始碼釋出,檔案保存,街機／Game Gear／Genesis 開發機回收碼（2021 上傳）,非官方釋出,🔴,B,46,2026-10-06,
+日本,CAPCOM,原始碼釋出,引擎元件,REDox（CAPCOM-TD-OSS 唯一公開 repo）,官方開源 Apache-2.0,🟡,A,47,2026-10-06,引擎元件非遊戲本體
+歐美,Ubisoft,原始碼釋出,工具,Sharpmake（C# 專案產生器，AC3 2011 起內部使用）,官方開源,🟡,B,48,2026-10-06,
+歐美,Ubisoft,原始碼釋出,伺服器,Massgate（World in Conflict 線上後端）,官方開源,🟡,B,48,2026-10-06,
+歐美,Ubisoft,原始碼釋出,工具,Chroma / UbiChroma（色盲模擬）,官方開源,🟡,B,48,2026-10-06,
+日本,Square Enix,原始碼釋出,—,無官方釋出；部分舊作原始碼已遺失,—,—,B,49,2026-10-06,FF Tactics 重製時靠分析既有版本重建
